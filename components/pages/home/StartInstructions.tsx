@@ -2,7 +2,7 @@ const StartInstructions = () => {
   return (
     <section className="w-full py-8">
       <div className="container grid grid-cols-2 grid-rows-3 gap-x-14 gap-y-6">
-        <div className="col-span-1 row-span-3 self-center">
+        <div className="col-span-1 row-span-3">
           <h1 className="text-2xl font-semibold mb-4">
             Start Engaging in Minutes
           </h1>
@@ -20,7 +20,10 @@ const StartInstructions = () => {
           </div>
           <div>
             <h5 className="text-lg">Sign up for a Free.</h5>
-            <p>Choose a plan that fits your needs and create your account.</p>
+            <p>
+              Choose a plan that fits your needs and create your first free
+              account.
+            </p>
           </div>
         </div>
 
