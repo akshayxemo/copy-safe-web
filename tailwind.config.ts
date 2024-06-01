@@ -20,6 +20,7 @@ const config = {
     extend: {
       backgroundImage: {
         "hero-pattern": "url('../public/images/hero.png')",
+        "header-pattern": "url('../public/images/header.png')",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)"],

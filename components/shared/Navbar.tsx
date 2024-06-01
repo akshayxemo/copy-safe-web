@@ -10,10 +10,10 @@ const Navbar = () => {
       <div>
         <ul className="flex gap-5 items-center">
           <li className="hover:text-white text-gray-300 cursor-pointer">
-            Home
+            <Link href={"/home"}>Home</Link>
           </li>
           <li className="hover:text-white text-gray-300 cursor-pointer">
-            Pricing
+            <Link href={"/pricing"}>Pricing</Link>
           </li>
           <li>
             <Button className="bg-white/10 text-white hover:bg-white hover:text-black">
