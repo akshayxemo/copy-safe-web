@@ -95,3 +95,24 @@ h6 {
 p {
   @apply font-sans font-extralight text-gray-400;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600 cursor-pointer;
+}
