@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 
 const Navbar = () => {
   return (
     <nav className="fixed flex gap-6 justify-between px-8 py-4 backdrop-blur-lg left-0 top-0 z-[9999] text-white w-full items-center">
-      <div>
+      <Link href={"/home"}>
         <h3 className="text-xl">CopySafe.</h3>
-      </div>
+      </Link>
       <div>
         <ul className="flex gap-5 items-center">
           <li className="hover:text-white text-gray-300 cursor-pointer">
