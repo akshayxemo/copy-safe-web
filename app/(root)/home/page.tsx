@@ -3,9 +3,9 @@ import StartInstructions from "@/components/pages/home/StartInstructions";
 
 export default function Home() {
   return (
-    <main className="bg-black text-white">
+    <div className="bg-black text-white">
       <Hero />
       <StartInstructions />
-    </main>
+    </div>
   );
 }

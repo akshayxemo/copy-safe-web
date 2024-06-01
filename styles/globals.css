@@ -80,7 +80,7 @@
 }
 
 .material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
 }
 
 h1,
@@ -89,9 +89,9 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-sans;
+  @apply font-sans tracking-tighter;
 }
 
 p {
-  @apply font-mono font-extralight text-gray-400;
+  @apply font-sans font-extralight text-gray-400;
 }
