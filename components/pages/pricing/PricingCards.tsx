@@ -7,7 +7,7 @@ const PricingCards = () => {
         title={"Free"}
         desc={"For indivisual and personal use to get started."}
         list={["5 interaction per day", "1 image upload per day"]}
-        buttonTitle={"Get started"}
+        buttonTitle={"Get Started"}
       />
       <PricingCard
         title={"Standerd"}
