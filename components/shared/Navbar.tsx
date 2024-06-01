@@ -8,8 +8,12 @@ const Navbar = () => {
       </div>
       <div>
         <ul className="flex gap-5 items-center">
-          <li>Home</li>
-          <li>Pricing</li>
+          <li className="hover:text-white text-gray-300 cursor-pointer">
+            Home
+          </li>
+          <li className="hover:text-white text-gray-300 cursor-pointer">
+            Pricing
+          </li>
           <li>
             <Button className="bg-white/10 text-white hover:bg-white hover:text-black">
               Login
