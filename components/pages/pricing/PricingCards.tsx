@@ -10,7 +10,7 @@ const PricingCards = () => {
         buttonTitle={"Get Started"}
       />
       <PricingCard
-        title={"Standerd"}
+        title={"Standard"}
         desc={"For individual or company to professional use."}
         list={[
           "50 interaction per day",
