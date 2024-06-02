@@ -4,10 +4,10 @@ const Footer = () => {
       <div className="w-full mb-2">
         <ul className="w-full flex items-center justify-center divide-x">
           <li className="hover:text-white text-gray-300 cursor-pointer px-3">
-            Home
+            <a href="/home">Home</a>
           </li>
           <li className="hover:text-white text-gray-300 cursor-pointer px-3">
-            Pricing
+            <a href="/pricing">Pricing</a>
           </li>
         </ul>
       </div>
