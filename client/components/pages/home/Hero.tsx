@@ -13,7 +13,12 @@ const Hero = () => {
           Ensure Your Content's Originality and Stand Out with Our Advanced
           Uniqueness Detection Tool. Lets get started.
         </p>
-        <LinkButton text="Get Started" icon="arrow_forward" link="/signup" />
+        <LinkButton
+          text="Get Started"
+          icon="arrow_forward"
+          link="/signup"
+          className="mt-4"
+        />
       </div>
     </div>
   );
