@@ -9,13 +9,13 @@ const PricingCard = ({
   price,
   interval,
 }: {
-  title: String;
-  desc: String;
-  list: String[];
-  buttonTitle: String;
-  buttonClass?: String;
-  price?: String;
-  interval?: String;
+  title: string;
+  desc: string;
+  list: string[];
+  buttonTitle: string;
+  buttonClass?: string;
+  price?: string;
+  interval?: string;
 }) => {
   return (
     <div className="flex flex-col p-4 rounded-lg bg-purple-500/5 backdrop-blur-lg w-80 gap-8 h-full">

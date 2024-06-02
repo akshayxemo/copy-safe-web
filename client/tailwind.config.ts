@@ -21,6 +21,7 @@ const config = {
       backgroundImage: {
         "hero-pattern": "url('../public/images/hero.png')",
         "header-pattern": "url('../public/images/header.png')",
+        "footer-pattern": "url('../public/images/footer.png')",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)"],

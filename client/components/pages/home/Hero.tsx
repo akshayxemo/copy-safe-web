@@ -1,3 +1,4 @@
+import LinkButton from "@/components/shared/LinkButton";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -12,10 +13,7 @@ const Hero = () => {
           Ensure Your Content's Originality and Stand Out with Our Advanced
           Uniqueness Detection Tool. Lets get started.
         </p>
-        <Button className="mt-4 bg-white/5 hover:bg-white text-white hover:text-black">
-          Get Started
-          <span className="material-symbols-outlined ml-2">arrow_forward</span>
-        </Button>
+        <LinkButton text="Get Started" icon="arrow_forward" link="/signup" />
       </div>
     </div>
   );
