@@ -21,7 +21,7 @@ const Signup = () => {
           <CardHeader>
             <CardTitle>Create Account</CardTitle>
             <CardDescription>
-              Lets create your first account to get started.
+              Let's create your account first to get started.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">

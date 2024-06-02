@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className=" text-gray-500 px-4 pt-10 pb-5">
+    <footer className=" text-gray-500 px-4 pt-10 pb-5 z-50">
       <div className="w-full mb-2">
         <ul className="w-full flex items-center justify-center divide-x">
           <li className="hover:text-white text-gray-300 cursor-pointer px-3">
