@@ -17,7 +17,7 @@ const Signup = () => {
     <section className="pt-20 pb-8">
       <div className="bg-footer-pattern absolute w-full h-full left-0 bottom-0"></div>
       <div className="container flex justify-center mt-8">
-        <Card className="bg-purple-500/5 border-none backdrop-blur-lg w-96 text-white">
+        <Card className="bg-purple-500/10 border-none backdrop-blur-lg w-96 text-white">
           <CardHeader>
             <CardTitle>Create Account</CardTitle>
             <CardDescription>
@@ -28,17 +28,17 @@ const Signup = () => {
             <Input
               type="text"
               placeholder="Name"
-              className="bg-white/5 border-none h-12"
+              className="bg-white/5 border-none h-12 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             <Input
               type="email"
               placeholder="Email"
-              className="bg-white/5 border-none h-12"
+              className="bg-white/5 border-none h-12 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             <Input
               type="password"
               placeholder="Password"
-              className="bg-white/5 border-none h-12"
+              className="bg-white/5 border-none h-12 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
           </CardContent>
           <CardFooter className="flex flex-col justify-between items-center gap-4">
