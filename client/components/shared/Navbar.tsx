@@ -49,7 +49,7 @@ const Navbar = () => {
                   src={Session.user?.image as string}
                   alt="@shadcn"
                 />
-                <AvatarFallback>
+                <AvatarFallback className="bg-purple-500 text-white font-bold">
                   {Session.user?.name?.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
