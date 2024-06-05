@@ -1,29 +1,47 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 module.exports = {
-  getUser: async (req, res) => {
+  isExistUser: async (req, res) => {
+    try {
+      const { email } = req.params;
+      const user = await User.findOne({ email: email }).lean();
+      if (!user) {
+        return res
+          .status(400)
+          .send({ data: null, error: true, message: "user not found." });
+      }
+      return res
+        .status(200)
+        .send({ data: user, error: false, message: "user exist." });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ data: null, error: true, message: "something went wrong." });
+    }
+  },
+  loginUser: async (req, res) => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email: email }).lean();
 
       if (!user) {
-        res
+        return res
           .status(400)
           .send({ data: null, error: true, message: "user not found." });
       }
 
       const checkPassword = await bcrypt.compare(password, user.password);
       if (!checkPassword) {
-        res
+        return res
           .status(401)
           .send({ data: null, error: true, message: "unauthorized." });
       }
 
-      res
+      return res
         .status(200)
         .send({ data: user, error: false, message: "authorized." });
     } catch (error) {
-      res
+      return res
         .status(500)
         .send({ data: null, error: true, message: "something went wrong." });
     }

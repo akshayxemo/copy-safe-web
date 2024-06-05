@@ -1,5 +1,4 @@
 import LinkButton from "@/components/shared/LinkButton";
-import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
@@ -16,7 +15,7 @@ const Hero = () => {
         <LinkButton
           text="Get Started"
           icon="arrow_forward"
-          link="/signup"
+          link="/auth/signup"
           className="mt-4"
         />
       </div>

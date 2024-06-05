@@ -12,21 +12,30 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { registerUser } from "@/actions/server.actions";
+import { redirect } from "next/navigation";
 
 const SignupForm = () => {
   const { register, handleSubmit, reset } = useForm();
   console.log(process.env.NEXT_PUBLIC_SERVER_BASE);
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
-    axios
-      .post(`${process.env.NEXT_PUBLIC_SERVER_BASE}/auth/user/create`, data)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 201) reset({ name: "", email: "", password: "" });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await registerUser(data);
+    if (!response.error) {
+      reset({ name: "", email: "", password: "" });
+      redirect("/auth/signin");
+    } else {
+      console.log(response.message);
+    }
+    // axios
+    //   .post(`${process.env.NEXT_PUBLIC_SERVER_BASE}/auth/user/create`, data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     if (res.status === 201) reset({ name: "", email: "", password: "" });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -61,7 +70,7 @@ const SignupForm = () => {
         <CardFooter className="flex flex-col justify-between items-center gap-4">
           <p className="text-sm">
             Already have an account ?{" "}
-            <Link href={"/signin"} className="text-blue-500">
+            <Link href={"/auth/signin"} className="text-blue-500">
               Login
             </Link>
           </p>

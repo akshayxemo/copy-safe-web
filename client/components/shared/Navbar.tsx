@@ -26,11 +26,16 @@ const Navbar = () => {
           <li className="hover:text-white text-gray-300 cursor-pointer py-2">
             <Link href={"/pricing"}>Pricing</Link>
           </li>
-          <li>
-            {/* TODO: Conditionally render Login button based on isAuthenticated */}
-            {!(pathname === "/signup" || pathname === "/signin") && (
-              <LinkButton text="Login" link="/signin" />
-            )}
+
+          {/* TODO: Conditionally render Login button based on isAuthenticated */}
+          {!(pathname === "/auth/signup" || pathname === "/auth/signin") && (
+            <li>
+              <LinkButton text="Login" link="/auth/signin" />
+            </li>
+          )}
+
+          <li className="hover:text-white text-gray-300 cursor-pointer py-2">
+            <div className="h-8 aspect-square bg-transparent rounded-full border-[3px] border-purple-500 p-1 flex justify-center items-center"></div>
           </li>
         </ul>
       </div>
