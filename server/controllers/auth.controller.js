@@ -31,10 +31,11 @@ module.exports = {
 
   createUser: async (req, res) => {
     try {
-      const { name, email, password, subscription } = req.body;
+      const { name, email, password } = req.body;
+      console.log(req.body);
       const existUser = await User.findOne({ email: email }).lean();
       if (existUser) {
-        res
+        return res
           .status(400)
           .send({ data: null, error: true, message: "user already exists." });
       }
@@ -46,7 +47,7 @@ module.exports = {
         name: name,
         email: email,
         password: hashedPassword,
-        subscription: subscription,
+        subscription: "Free",
       });
 
       const savedUser = await newUser.save();
@@ -55,13 +56,13 @@ module.exports = {
         console.log("user creation failed.");
         throw new Error("user creation failed.");
       }
-      res.status(201).send({
+      return res.status(201).send({
         data: newUser,
         error: false,
         message: "new user successfully created.",
       });
     } catch (error) {
-      res
+      return res
         .status(500)
         .send({ data: null, error: true, message: "something went wrong." });
     }

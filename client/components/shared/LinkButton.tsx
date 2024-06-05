@@ -6,10 +6,12 @@ const LinkButton = ({
   text,
   link,
   icon,
+  className = "",
 }: {
   text: string;
   link: string;
-  icon: string;
+  icon?: string;
+  className?: string;
 }) => {
   const router = useRouter();
   const handleClick = () => {
@@ -17,11 +19,11 @@ const LinkButton = ({
   };
   return (
     <Button
-      className="mt-4 bg-white/5 hover:bg-white text-white hover:text-black"
+      className={`bg-white/5 hover:bg-white text-white hover:text-black ${className}`}
       onClick={handleClick}
     >
       {text}
-      <span className="material-symbols-outlined ml-2">{icon}</span>
+      {icon && <span className="material-symbols-outlined ml-2">{icon}</span>}
     </Button>
   );
 };

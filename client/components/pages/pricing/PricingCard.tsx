@@ -18,7 +18,7 @@ const PricingCard = ({
   interval?: string;
 }) => {
   return (
-    <div className="flex flex-col p-4 rounded-lg bg-purple-500/5 backdrop-blur-lg w-80 gap-8 h-full">
+    <div className="flex flex-col p-4 rounded-lg bg-purple-500/10 backdrop-blur-lg w-80 gap-8 h-full">
       <div>
         <h1 className="text-2xl">{title}</h1>
         <p>{desc}</p>
