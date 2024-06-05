@@ -10,10 +10,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { registerUser } from "@/actions/server.actions";
 import { redirect } from "next/navigation";
+// import axios from "axios";
 
 const SignupForm = () => {
   const { register, handleSubmit, reset } = useForm();
