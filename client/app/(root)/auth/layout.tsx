@@ -10,7 +10,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
     redirect(`/chat`);
   }
 
-  return <div className="min-h-screen w-full">{children}</div>;
+  return <div className="min-h-full w-full">{children}</div>;
 };
 
 export default layout;
