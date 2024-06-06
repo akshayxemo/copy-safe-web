@@ -41,7 +41,7 @@ const AvatarSettingMenu = ({
   return (
     <div className="relative">
       <Avatar
-        className="cursor-pointer h-9 w-9 aspect-square"
+        className="cursor-pointer h-9 w-9 aspect-square ring-white/10 ring-2"
         onClick={() => {
           setOpen(!open);
         }}
@@ -54,13 +54,13 @@ const AvatarSettingMenu = ({
       {open && (
         <div
           ref={divRef}
-          className="h-30 min-w-48 bg-white text-black font-sans absolute z-[10000] p-1 right-0 top-11 rounded-md flex flex-col"
+          className="h-30 min-w-48 bg-white/5 backdrop-blur-xl text-white border-white/10 border font-sans absolute z-[10000] p-1 right-0 top-11 rounded-md flex flex-col"
         >
           <h5 className="text-base font-semibold px-1 pt-1 pb-2">My Account</h5>
-          <hr />
+          <hr className="border border-white/10" />
           <div className="flex flex-col gap-1 py-1">
             <div
-              className="flex justify-start items-center text-sm font-medium hover:bg-gray-500/15 py-1 h-8 px-2 rounded-sm cursor-pointer"
+              className="flex justify-start items-center text-sm font-medium hover:bg-white/10 py-1 h-8 px-2 rounded-sm cursor-pointer"
               onClick={() => {
                 router.push(`/chat`);
               }}
@@ -69,7 +69,7 @@ const AvatarSettingMenu = ({
               <span>Chat</span>
             </div>
             <div
-              className="flex justify-start items-center text-sm font-medium hover:bg-gray-500/15 py-1 h-8 px-2 rounded-sm cursor-pointer"
+              className="flex justify-start items-center text-sm font-medium hover:bg-white/10 py-1 h-8 px-2 rounded-sm cursor-pointer"
               onClick={() => {
                 router.push("/pricing");
               }}
@@ -78,19 +78,19 @@ const AvatarSettingMenu = ({
               <span>Billing</span>
             </div>
             <div
-              className="flex justify-start items-center text-sm font-medium hover:bg-gray-500/15 py-1 h-8 px-2 rounded-sm cursor-pointer"
+              className="flex justify-start items-center text-sm font-medium hover:bg-white/10 py-1 h-8 px-2 rounded-sm cursor-pointer"
               onClick={() => {
-                redirect("/pricing");
+                router.push("/settings");
               }}
             >
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </div>
           </div>
-          <hr />
+          <hr className="border border-white/10" />
           <div className="flex flex-col gap-1 pt-1">
             <div
-              className="flex justify-start items-center text-sm font-medium hover:bg-gray-500/15 py-1 h-8 px-2 rounded-sm cursor-pointer"
+              className="flex justify-start items-center text-sm font-medium hover:bg-white/10 py-1 h-8 px-2 rounded-sm cursor-pointer"
               onClick={() => {
                 signOut();
               }}
