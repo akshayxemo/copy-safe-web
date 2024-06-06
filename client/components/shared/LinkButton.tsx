@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const LinkButton = ({
   text,
@@ -13,18 +13,15 @@ const LinkButton = ({
   icon?: string;
   className?: string;
 }) => {
-  const router = useRouter();
-  const handleClick = () => {
-    router.push(link);
-  };
   return (
-    <Button
-      className={`bg-white/5 hover:bg-white text-white hover:text-black ${className}`}
-      onClick={handleClick}
+    <Link
+      href={link}
+      className={`bg-white/5 hover:bg-white text-white hover:text-black ${className} h-10 px-4 py-4 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium gap-2`}
+      // onClick={handleClick}
     >
       {text}
-      {icon && <span className="material-symbols-outlined ml-2">{icon}</span>}
-    </Button>
+      {icon && <ArrowRight />}
+    </Link>
   );
 };
 
