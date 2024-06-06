@@ -2,21 +2,15 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { recognizeText } from "@/utils/functions";
-import { CloudUpload, ImagePlus, Send } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { CloudUpload, ImagePlus, LoaderCircle, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const page = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const fileUploadRef = useRef<HTMLInputElement | null>(null);
   const [recognizedText, setRecognizedText] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const handleResize = useCallback(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, []);
+  const [loadingImage, setLoadingImage] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,8 +46,10 @@ const page = () => {
       reader.onload = async () => {
         const imageUrl = reader.result as string;
         setSelectedImage(imageUrl);
+        setLoadingImage(true);
         const text: string = await recognizeText(imageUrl);
         setRecognizedText(text);
+        setLoadingImage(false);
       };
       reader.readAsDataURL(file);
     }
@@ -89,9 +85,13 @@ const page = () => {
       />
 
       <div className="flex w-full">
-        <div className="w-full bg-white/5 flex gap-1.5 justify-center items-end py-3 px-5 rounded-md">
+        <div className="w-full bg-white/5 flex gap-1.5 justify-center items-end py-3 px-5 rounded-md cursor-pointer">
           <div className="py-2" onClick={handleDivClick}>
-            <ImagePlus className="cursor-pointer" />
+            {!loadingImage ? (
+              <ImagePlus />
+            ) : (
+              <LoaderCircle className="animate-spin" />
+            )}
           </div>
           <Textarea
             ref={textareaRef}
@@ -101,10 +101,14 @@ const page = () => {
             style={{ minHeight: "2rem", maxHeight: "13rem" }}
             value={recognizedText}
             onChange={(e) => setRecognizedText(e.target.value)}
+            disabled={loadingImage}
           />
-          <div className="py-2">
-            <Send className="cursor-pointer" />
-          </div>
+          <button
+            className={`${loadingImage && "cursor-wait"} py-2 cursor-pointer`}
+            disabled={loadingImage}
+          >
+            <Send />
+          </button>
         </div>
       </div>
     </div>
