@@ -30,7 +30,7 @@ const ProfileNav = () => {
   });
 
   return (
-    <nav className="w-full px-4 py-3 border-b border-gray-500/15 bg-purple-500/15 flex justify-end items-center gap-3">
+    <nav className="w-full min-h-16 px-4 py-3 border-b border-gray-500/15 bg-purple-500/15 flex justify-end items-center gap-3">
       <div className="text-end">
         <h1 className="">{Session?.user?.name}</h1>
         <p className="text-sm">{Session?.user?.email}</p>
