@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Cloud,
@@ -9,8 +10,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const AvatarSettingMenu = ({
@@ -20,6 +20,7 @@ const AvatarSettingMenu = ({
   image: string;
   name: string;
 }) => {
+  const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const divRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,8 +61,8 @@ const AvatarSettingMenu = ({
           <div className="flex flex-col gap-1 py-1">
             <div
               className="flex justify-start items-center text-sm font-medium hover:bg-gray-500/15 py-1 h-8 px-2 rounded-sm cursor-pointer"
-              onMouseEnter={() => {
-                redirect("/chat");
+              onClick={() => {
+                router.push(`/chat`);
               }}
             >
               <MessageSquare className="mr-2 h-4 w-4" />
@@ -70,7 +71,7 @@ const AvatarSettingMenu = ({
             <div
               className="flex justify-start items-center text-sm font-medium hover:bg-gray-500/15 py-1 h-8 px-2 rounded-sm cursor-pointer"
               onClick={() => {
-                redirect("/pricing");
+                router.push("/pricing");
               }}
             >
               <CreditCard className="mr-2 h-4 w-4" />

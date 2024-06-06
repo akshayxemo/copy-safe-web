@@ -30,24 +30,16 @@ const ProfileNav = () => {
   });
 
   return (
-    <nav className="w-full px-4 py-3 border-b border-gray-500/15 bg-purple-500/15 flex justify-end items-center gap-2">
+    <nav className="w-full px-4 py-3 border-b border-gray-500/15 bg-purple-500/15 flex justify-end items-center gap-3">
       <div className="text-end">
         <h1 className="">{Session?.user?.name}</h1>
         <p className="text-sm">{Session?.user?.email}</p>
       </div>
       {Session && (
-        <>
-          {/* <Avatar className="cursor-pointer h-9 w-9 aspect-square">
-            <AvatarImage src={Session.user?.image as string} alt="user-image" />
-            <AvatarFallback className="bg-purple-500 text-white font-bold">
-              {Session.user?.name?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar> */}
-          <AvatarSettingMenu
-            name={Session.user?.name as string}
-            image={Session.user?.image as string}
-          />
-        </>
+        <AvatarSettingMenu
+          name={Session.user?.name as string}
+          image={Session.user?.image as string}
+        />
       )}
     </nav>
   );
