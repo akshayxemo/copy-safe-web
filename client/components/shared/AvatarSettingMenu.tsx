@@ -80,7 +80,7 @@ const AvatarSettingMenu = ({
             <div
               className="flex justify-start items-center text-sm font-medium hover:bg-white/10 py-1 h-8 px-2 rounded-sm cursor-pointer"
               onClick={() => {
-                router.push("/settings");
+                router.push("/");
               }}
             >
               <Settings className="mr-2 h-4 w-4" />

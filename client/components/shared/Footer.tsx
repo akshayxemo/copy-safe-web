@@ -4,7 +4,7 @@ const Footer = () => {
       <div className="w-full mb-2">
         <ul className="w-full flex items-center justify-center divide-x">
           <li className="hover:text-white text-gray-300 cursor-pointer px-3">
-            <a href="/home">Home</a>
+            <a href="/">Home</a>
           </li>
           <li className="hover:text-white text-gray-300 cursor-pointer px-3">
             <a href="/pricing">Pricing</a>

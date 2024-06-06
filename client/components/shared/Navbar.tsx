@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed flex gap-6 justify-between px-8 py-3 backdrop-blur-lg left-0 top-0 z-[9999] text-white w-full items-center">
-      <Link href={"/home"} className="flex gap-2 items-center justify-center">
+      <Link href={"/"} className="flex gap-2 items-center justify-center">
         <Image
           src={"/icons/logoi-colored.png"}
           alt="logo-color"
@@ -28,7 +28,7 @@ const Navbar = () => {
       <div>
         <ul className="flex gap-5 items-center">
           <li className="hover:text-white text-gray-300 cursor-pointer py-2">
-            <Link href={"/home"}>Home</Link>
+            <Link href={"/"}>Home</Link>
           </li>
           <li className="hover:text-white text-gray-300 cursor-pointer py-2">
             <Link href={"/pricing"}>Pricing</Link>
