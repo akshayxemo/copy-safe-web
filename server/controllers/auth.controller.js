@@ -1,6 +1,27 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 module.exports = {
+  updateUserAuthId: async (req, res) => {
+    try {
+      const { email } = req.params;
+      const { authId, image } = req.body;
+      console.log("update", req.body);
+      const updateUser = await User.updateOne(
+        { email: email },
+        { $set: { authId: authId, image: image } }
+      );
+      console("updated", updateUser);
+      if (updateUser) {
+        return res
+          .status(200)
+          .send({ data: updateUser, error: false, message: "user updated." });
+      } else throw new Error("User not updated.");
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ data: null, error: true, message: "something went wrong." });
+    }
+  },
   isExistUser: async (req, res) => {
     try {
       const { email } = req.params;
@@ -49,7 +70,7 @@ module.exports = {
 
   createUser: async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, authId, image } = req.body;
       console.log(req.body);
       const existUser = await User.findOne({ email: email }).lean();
       if (existUser) {
@@ -65,6 +86,8 @@ module.exports = {
         name: name,
         email: email,
         password: hashedPassword,
+        authId: authId ? authId : "",
+        image: image ? image : "",
         subscription: "Free",
       });
 

@@ -1,9 +1,11 @@
 import {
   registerUser,
-  varifyUserExist,
+  updateUserAuthId,
+  loginUser,
   varifyUserExistence,
 } from "@/actions/server.actions";
 import { userCredential } from "@/types";
+import { generateRandomString } from "@/utils/functions";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -31,7 +33,7 @@ export const options: NextAuthOptions = {
       credentials: {},
       async authorize(credentials) {
         const user = credentials as userCredential;
-        const response = await varifyUserExist(user);
+        const response = await loginUser(user);
         if (!response.error) {
           return {
             id: response._id,
@@ -49,14 +51,14 @@ export const options: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token }) {
-      console.log("token : ", token);
+      // console.log("token : ", token);
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
         session.user.id = token.sub;
       }
-      console.log("session:", session);
+      // console.log("session:", session);
       return session;
     },
     async signIn({ user, account, profile }) {
@@ -64,16 +66,25 @@ export const options: NextAuthOptions = {
       if (account?.type === "oauth" && account?.provider === "google") {
         // Check if the user already exists in your database
         const existingUser = await varifyUserExistence(user.email as string);
-
-        if (!existingUser) {
+        console.log("exist:", existingUser, profile);
+        if (existingUser.error) {
           // If the user doesn't exist, create a new user record in your database
           const res = await registerUser({
             name: profile?.name as string,
             email: user.email as string,
+            password: generateRandomString(8),
+            authId: profile?.sub as string,
+            image: user.image as string,
           });
+          console.log("76: options", res);
+        } else if (!existingUser.data.authId) {
+          const res = await updateUserAuthId(user.email as string, {
+            authId: profile?.sub as string,
+            image: user.image as string,
+          });
+          console.log("82: options", res);
         }
       }
-
       return true; // Continue the sign-in process
     },
   },
