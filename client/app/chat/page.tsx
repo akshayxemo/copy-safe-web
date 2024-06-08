@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const ChatPage = () => {
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="flex-1 flex flex-col justify-center items-center">
       <div className="flex-1 flex flex-col justify-center items-center">
         <Image
           src={"/icons/logoi.png"}
