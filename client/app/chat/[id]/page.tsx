@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 interface chat {
   message: string;
@@ -48,26 +49,48 @@ const page = ({ params }: { params: { id: string } }) => {
                 id="chats"
                 key={index}
               >
-                <div className="p-2 bg-purple-500/10 rounded-lg min-h-8 max-w-[80%] min-w-[30%] col-span-1 justify-self-end">
+                <div className="p-4 bg-purple-500/10 rounded-lg min-h-8 max-w-[80%] min-w-[30%] col-span-1 justify-self-end">
                   {chat.message}
                 </div>
-                <div className="p-2 bg-transparent rounded-lg min-h-8 max-w-[80%] min-w-[30%] col-span-1 justify-self-start grid grid-cols-1 gap-2">
+                <div className="p-2 bg-transparent rounded-lg min-h-8 max-w-[80%] min-w-[30%] col-span-1 justify-self-start grid grid-cols-1 gap-4">
                   {chat.response.length ? (
                     chat.response.map((el, index) => {
                       return (
                         <div
-                          className="col-span-1 rounded-lg p-2 ring-1 ring-white/10"
+                          className="col-span-1 rounded-lg p-4 ring-1 ring-white/10"
                           key={index}
                         >
-                          <h3>{el.title}</h3>
-                          <p>Acl Id: {el.aclId}</p>
-                          <p>{el.abstract}</p>
-                          <p>Citation: {el.citation}</p>
-                          <p>Corpus Id: {el.corpusId}</p>
-                          {/* <p>{el.year}</p> */}
-                          <a href={el.url} target="blank">
-                            {el.url}
-                          </a>
+                          <h3 className="text-2xl mb-1">{el.title}</h3>
+                          <p className="font-mono mb-4">Acl Id: {el.aclId}</p>
+                          <p className="mb-4">{el.abstract}</p>
+                          <div className="flex w-full gap-4 justify-between items-end">
+                            <div>
+                              <p>
+                                <strong className="text-white">Year:</strong>{" "}
+                                {el.year}
+                              </p>
+                              <p>
+                                <strong className="text-white">
+                                  Citation:
+                                </strong>{" "}
+                                {el.citation}
+                              </p>
+                              <p>
+                                <strong className="text-white">
+                                  Corpus Id:
+                                </strong>{" "}
+                                {el.corpusId}
+                              </p>
+                            </div>
+                            <a
+                              href={el.url}
+                              target="blank"
+                              title="Go to paper link"
+                              className="p-3 rounded-full bg-white/5"
+                            >
+                              <SquareArrowOutUpRight className="w-5 h-5" />
+                            </a>
+                          </div>
                         </div>
                       );
                     })
