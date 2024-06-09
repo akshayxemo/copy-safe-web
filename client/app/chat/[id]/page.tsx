@@ -1,11 +1,12 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Response from "@/components/pages/chat/Response";
 import { useChatContext } from "@/components/pages/chat/context/ChatProvider";
 
 const page = ({ params }: { params: { id: string } }) => {
-  const { chats, setChats } = useChatContext();
+  const { chats, setChats, chatContainerRef, scrollToBottom } =
+    useChatContext();
 
   const getChats = async () => {
     try {
@@ -21,11 +22,12 @@ const page = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     getChats();
+    scrollToBottom();
   }, []);
 
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <div className="w-full h-full overflow-y-auto">
+      <div className="w-full h-full overflow-y-auto" ref={chatContainerRef}>
         {chats.length !== 0 ? (
           chats.map((chat, index) => {
             return (

@@ -8,6 +8,7 @@ import {
   ReactNode,
   MutableRefObject,
   useRef,
+  RefObject,
 } from "react";
 
 interface ChatContextType {
@@ -25,6 +26,8 @@ interface ChatContextType {
   reqLoding: boolean;
   chats: Chat[];
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
+  chatContainerRef: RefObject<HTMLDivElement>;
+  scrollToBottom: () => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -43,8 +46,17 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [fileValue, setFileValue] = useState<File | null>(null);
   const [text, setText] = useState<string>("");
   const [reqLoding, setReqLoading] = useState<boolean>(false);
-  const imageRef = useRef<HTMLInputElement | null>(null);
   const [chats, setChats] = useState<Chat[]>([]);
+
+  const imageRef = useRef<HTMLInputElement | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -92,6 +104,8 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
         reqLoding,
         chats,
         setChats,
+        chatContainerRef,
+        scrollToBottom,
       }}
     >
       {children}

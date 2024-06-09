@@ -14,7 +14,7 @@ const Response = ({ el, index }: { el: ResponseFrame; index: number }) => {
         {el.matchScore && (
           <p className="font-mono">
             <strong className="text-white">Similarity:</strong>{" "}
-            {Math.floor(el.matchScore * 100)} %
+            {(el.matchScore * 100).toFixed(2)} %
           </p>
         )}
       </div>
