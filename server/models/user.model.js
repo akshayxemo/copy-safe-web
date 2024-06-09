@@ -11,7 +11,7 @@ const userSchema = new Schema(
     subscription: { type: String, required: true },
     subToken: { type: String },
     chatId: {
-      type: Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       unique: true,
       default: () => new mongoose.Types.ObjectId(),
