@@ -6,7 +6,7 @@ const { default: mongoose } = require("mongoose");
 module.exports = {
   createChat: async (req, res) => {
     try {
-      const { abstract, userId } = req.body;
+      const { abstract, userId, chatId } = req.body;
       // if (mongoose.Types.ObjectId.isValid(userId)) {
       //   return res.status(400).send({ error: true, message: "Invalid chatId" });
       // }
@@ -24,7 +24,7 @@ module.exports = {
           .send({ error: true, message: "AI response error" });
       }
 
-      chat = await Chat.findOne({ userId: userId });
+      chat = await Chat.findOne({ _id: chatId });
       if (chat) {
         chat.chats.push({
           message: abstract,
@@ -50,7 +50,7 @@ module.exports = {
         const user = await User.findOne(query).select("_id").lean();
         // console.log(Id, chatId);
         chat = new Chat({
-          // _id: chatId,
+          _id: chatId,
           user: user._id,
           chats: [
             {
