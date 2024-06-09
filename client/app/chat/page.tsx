@@ -1,7 +1,16 @@
-import CreateChatBtn from "@/components/pages/chat/CreateChatBtn";
 import Image from "next/image";
 
-const ChatPage = () => {
+import { options } from "../api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+
+const ChatPage = async () => {
+  const Session: any = await getServerSession(options);
+
+  if (Session?.user?.chatId) {
+    redirect(`/chat/${Session.user.chatId}`);
+  }
+
   return (
     <div className="flex-1 flex flex-col justify-center items-center">
       <div className="flex-1 flex flex-col justify-center items-center">
@@ -14,7 +23,6 @@ const ChatPage = () => {
         />
         <h1 className="text-4xl">CopySafe.</h1>
         <p>Lets get started with your checking.</p>
-        <CreateChatBtn />
       </div>
     </div>
   );

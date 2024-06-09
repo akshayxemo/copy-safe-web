@@ -10,3 +10,19 @@ export interface userRegisterCredential {
   authId?: string;
   image?: string;
 }
+
+export interface Chat {
+  message: string;
+  response: [ResponseFrame];
+}
+
+export interface ResponseFrame {
+  title: string;
+  abstract: string;
+  aclId?: string;
+  corpusId?: string;
+  citation?: string;
+  year?: string;
+  url?: string;
+  matchScore?: number;
+}

@@ -4,8 +4,13 @@ import { useChatContext } from "./context/ChatProvider";
 import { Textarea } from "@/components/ui/textarea";
 import { ImagePlus, LoaderCircle, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const ChatBox = () => {
+  const { data: Session } = useSession({
+    required: false,
+  });
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const {
     handleImageUpload,
@@ -14,6 +19,8 @@ const ChatBox = () => {
     setText,
     imageRef,
     handleRefDivClick,
+    reqLoding,
+    setChats,
   } = useChatContext();
 
   useEffect(() => {
@@ -36,6 +43,24 @@ const ChatBox = () => {
       }
     };
   }, [text]);
+
+  const handleSubmit = async () => {
+    try {
+      const { data: responseData } = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_BASE}/chat/send`,
+        {
+          abstract: text,
+          userId: Session?.user?.id,
+          chatId: Session?.user?.chatId,
+        }
+      );
+      setText("");
+      console.log(responseData);
+      setChats(responseData.data.chats);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex w-full sticky bottom-0 left-0 justify-center py-5 px-5 bg-[#190d25]">
       <Input
@@ -65,8 +90,11 @@ const ChatBox = () => {
           disabled={loadingImage}
         />
         <button
-          className={`${loadingImage && "cursor-wait"} py-2 cursor-pointer`}
-          disabled={loadingImage}
+          className={`${
+            loadingImage && "cursor-wait text-white/10"
+          } py-2 cursor-pointer`}
+          disabled={loadingImage || reqLoding}
+          onClick={handleSubmit}
         >
           <Send />
         </button>

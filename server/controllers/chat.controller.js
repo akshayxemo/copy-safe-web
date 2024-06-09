@@ -1,5 +1,7 @@
 const axios = require("axios");
 const Chat = require("../models/chat.model");
+const User = require("../models/user.model");
+const { default: mongoose } = require("mongoose");
 
 module.exports = {
   createChat: async (req, res) => {
@@ -14,7 +16,7 @@ module.exports = {
       let chat;
 
       if (data.success) {
-        chat = await Chat.findOne({ id: chatId });
+        chat = await Chat.findOne({ _id: chatId });
         if (chat) {
           chat.chats.push({
             message: abstract,
@@ -32,9 +34,15 @@ module.exports = {
             }),
           });
         } else {
+          const Id = await User.findOne({
+            $or: [{ _id: userId }, { authId: userId }],
+          })
+            .select("_id")
+            .lean();
+          console.log(Id, chatId);
           chat = new Chat({
-            id: chatId,
-            user: userId,
+            _id: chatId,
+            user: Id,
             chats: [
               {
                 message: abstract,
@@ -57,6 +65,8 @@ module.exports = {
         await chat.save();
       }
 
+      console.log(chat);
+
       res.status(200).send({ message: "Sucess", data: chat });
     } catch (error) {
       console.log(error);
@@ -69,7 +79,8 @@ module.exports = {
   getChats: async (req, res) => {
     try {
       const { chatId } = req.params;
-      const chat = await Chat.findOne({ id: chatId });
+      console.log(chatId);
+      const chat = await Chat.findOne({ _id: chatId });
       if (!chat) {
         return res.status(404).send({ error: true, message: "no chats found" });
       }

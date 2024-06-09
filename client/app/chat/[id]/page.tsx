@@ -1,26 +1,11 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { SquareArrowOutUpRight } from "lucide-react";
-
-interface chat {
-  message: string;
-  response: [
-    {
-      title: string;
-      abstract: string;
-      aclId?: string;
-      corpusId?: string;
-      citation?: string;
-      year?: string;
-      url?: string;
-      matchScore?: string;
-    }
-  ];
-}
+import Response from "@/components/pages/chat/Response";
+import { useChatContext } from "@/components/pages/chat/context/ChatProvider";
 
 const page = ({ params }: { params: { id: string } }) => {
-  const [chats, setChats] = useState<chat[]>([]);
+  const { chats, setChats } = useChatContext();
 
   const getChats = async () => {
     try {
@@ -55,44 +40,7 @@ const page = ({ params }: { params: { id: string } }) => {
                 <div className="p-2 bg-transparent rounded-lg min-h-8 max-w-[80%] min-w-[30%] col-span-1 justify-self-start grid grid-cols-1 gap-4">
                   {chat.response.length ? (
                     chat.response.map((el, index) => {
-                      return (
-                        <div
-                          className="col-span-1 rounded-lg p-4 ring-1 ring-white/10"
-                          key={index}
-                        >
-                          <h3 className="text-2xl mb-1">{el.title}</h3>
-                          <p className="font-mono mb-4">Acl Id: {el.aclId}</p>
-                          <p className="mb-4">{el.abstract}</p>
-                          <div className="flex w-full gap-4 justify-between items-end">
-                            <div>
-                              <p>
-                                <strong className="text-white">Year:</strong>{" "}
-                                {el.year}
-                              </p>
-                              <p>
-                                <strong className="text-white">
-                                  Citation:
-                                </strong>{" "}
-                                {el.citation}
-                              </p>
-                              <p>
-                                <strong className="text-white">
-                                  Corpus Id:
-                                </strong>{" "}
-                                {el.corpusId}
-                              </p>
-                            </div>
-                            <a
-                              href={el.url}
-                              target="blank"
-                              title="Go to paper link"
-                              className="p-3 rounded-full bg-white/5"
-                            >
-                              <SquareArrowOutUpRight className="w-5 h-5" />
-                            </a>
-                          </div>
-                        </div>
-                      );
+                      return <Response el={el} index={index} />;
                     })
                   ) : (
                     <div className="col-span-2">

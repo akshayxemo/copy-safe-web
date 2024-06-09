@@ -22,7 +22,11 @@ export const registerUser = async (credentials: userRegisterCredential) => {
       credentials
     );
     console.log(response.data);
-    return { error: response.data.error, message: response.data.message };
+    return {
+      error: response.data.error,
+      message: response.data.message,
+      data: response.data.data,
+    };
   } catch (e) {
     console.log(e);
     return { error: true };

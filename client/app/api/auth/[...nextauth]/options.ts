@@ -6,9 +6,14 @@ import {
 } from "@/actions/server.actions";
 import { userCredential } from "@/types";
 import { generateRandomString } from "@/utils/functions";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, User, Account, Profile } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+
+interface ExtendedUser extends User {
+  chatId?: string;
+  subscription?: string;
+}
 
 export const options: NextAuthOptions = {
   session: {
@@ -23,6 +28,8 @@ export const options: NextAuthOptions = {
           ...profile,
           id: profile.sub,
           image: profile.picture,
+          // subscription: response.data.subscription,
+          // chatId: response.data.chatId,
         };
       },
       clientId: process.env.GOOGLE_ID as any,
@@ -42,6 +49,7 @@ export const options: NextAuthOptions = {
             image: response.image,
             authId: response.authId,
             subscription: response.subscription,
+            chatId: response.chatId,
           };
         } else {
           throw new Error(response.message);
@@ -50,15 +58,22 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token }) {
-      // console.log("token : ", token);
+    async jwt({ token, user }) {
+      console.log("token : ", token, user);
+      const extendedUser: ExtendedUser = user;
+      if (extendedUser) {
+        token.chatId = extendedUser.chatId;
+        token.subscription = extendedUser.subscription;
+      }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
         session.user.id = token.sub;
+        session.user.chatId = token.chatId;
+        session.user.subscription = token.subscription;
       }
-      // console.log("session:", session);
+      console.log("session:", session);
       return session;
     },
     async signIn({ user, account, profile }) {
@@ -67,6 +82,7 @@ export const options: NextAuthOptions = {
         // Check if the user already exists in your database
         const existingUser = await varifyUserExistence(user.email as string);
         console.log("exist:", existingUser, profile);
+        let chatId, subscription;
         if (existingUser.error) {
           // If the user doesn't exist, create a new user record in your database
           const res = await registerUser({
@@ -76,14 +92,24 @@ export const options: NextAuthOptions = {
             authId: profile?.sub as string,
             image: user.image as string,
           });
-          console.log("76: options", res);
+          chatId = res.data.chatId;
+          subscription = res.data.subscription;
+          console.log("96: options", res);
         } else if (!existingUser.data.authId) {
           const res = await updateUserAuthId(user.email as string, {
             authId: profile?.sub as string,
             image: user.image as string,
           });
-          console.log("82: options", res);
+          console.log("102: options", res);
+          chatId = res.data.chatId;
+          subscription = res.data.subscription;
+        } else {
+          chatId = existingUser.data.chatId;
+          subscription = existingUser.data.subscription;
         }
+
+        user.chatId = chatId;
+        user.subscription = subscription;
       }
       return true; // Continue the sign-in process
     },

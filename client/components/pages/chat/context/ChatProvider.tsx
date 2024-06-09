@@ -1,4 +1,5 @@
 "use client";
+import { Chat } from "@/types";
 import { recognizeText } from "@/utils/functions";
 import {
   createContext,
@@ -22,6 +23,8 @@ interface ChatContextType {
   loadingImage: boolean;
   setReqLoading: React.Dispatch<React.SetStateAction<boolean>>;
   reqLoding: boolean;
+  chats: Chat[];
+  setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -41,10 +44,11 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [text, setText] = useState<string>("");
   const [reqLoding, setReqLoading] = useState<boolean>(false);
   const imageRef = useRef<HTMLInputElement | null>(null);
+  const [chats, setChats] = useState<Chat[]>([]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log("upload", file);
+    // console.log("upload", file);
     if (file) {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -65,7 +69,7 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleRefDivClick = () => {
-    console.log("image ref", imageRef.current);
+    // console.log("image ref", imageRef.current);
     if (imageRef.current) {
       imageRef.current.click();
     }
@@ -86,6 +90,8 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
         fileValue,
         setReqLoading,
         reqLoding,
+        chats,
+        setChats,
       }}
     >
       {children}

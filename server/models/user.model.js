@@ -10,6 +10,12 @@ const userSchema = new Schema(
     authId: { type: String },
     subscription: { type: String, required: true },
     subToken: { type: String },
+    chatId: {
+      type: Schema.ObjectId,
+      required: true,
+      unique: true,
+      default: () => new mongoose.Types.ObjectId(),
+    },
   },
   {
     timestamps: true,

@@ -14,11 +14,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
-  const searchParams = useSearchParams();
-  const callBackUrl = searchParams.get("callbackUrl");
   const { register, handleSubmit, reset } = useForm();
   const onSubmitCredentials = async (data: any) => {
     console.log(data);
@@ -27,10 +24,10 @@ export const LoginForm = () => {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: callBackUrl ? callBackUrl : "/chat",
+      callbackUrl: "/chat",
     });
 
-    console.log(res);
+    console.log("login", res);
   };
   return (
     <Card className="bg-purple-500/10 border-none backdrop-blur-lg w-96 text-white">
@@ -75,7 +72,7 @@ export const LoginForm = () => {
           onClick={() => {
             signIn("google", {
               redirect: true,
-              callbackUrl: callBackUrl ? callBackUrl : "/chat",
+              callbackUrl: "/chat",
             });
           }}
         >

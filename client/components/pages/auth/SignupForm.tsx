@@ -12,10 +12,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { registerUser } from "@/actions/server.actions";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 // import axios from "axios";
 
 const SignupForm = () => {
+  const navigate = useRouter();
   const { register, handleSubmit, reset } = useForm();
   console.log(process.env.NEXT_PUBLIC_SERVER_BASE);
   const onSubmit = async (data: any) => {
@@ -23,19 +24,10 @@ const SignupForm = () => {
     const response = await registerUser(data);
     if (!response.error) {
       reset({ name: "", email: "", password: "" });
-      redirect("/auth/signin");
+      navigate.push("/auth/signin");
     } else {
       console.log(response.message);
     }
-    // axios
-    //   .post(`${process.env.NEXT_PUBLIC_SERVER_BASE}/auth/user/create`, data)
-    //   .then((res) => {
-    //     console.log(res);
-    //     if (res.status === 201) reset({ name: "", email: "", password: "" });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   return (
