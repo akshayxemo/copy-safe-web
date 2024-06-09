@@ -3,9 +3,10 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import Response from "@/components/pages/chat/Response";
 import { useChatContext } from "@/components/pages/chat/context/ChatProvider";
+import ChatSkeleton from "@/components/pages/chat/ChatSkeleton";
 
 const page = ({ params }: { params: { id: string } }) => {
-  const { chats, setChats, chatContainerRef, scrollToBottom } =
+  const { chats, setChats, lastMessageRef, scrollToLastChat, reqLoding } =
     useChatContext();
 
   const getChats = async () => {
@@ -22,12 +23,18 @@ const page = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     getChats();
-    scrollToBottom();
   }, []);
 
+  useEffect(() => {
+    scrollToLastChat();
+  }, [chats]);
+
   return (
-    <div className="flex h-full flex-col items-center justify-center">
-      <div className="w-full h-full overflow-y-auto" ref={chatContainerRef}>
+    <div
+      className="flex h-full flex-col items-center justify-center overflow-y-auto"
+      // ref={chatContainerRef}
+    >
+      <div className="w-full h-full">
         {chats.length !== 0 ? (
           chats.map((chat, index) => {
             return (
@@ -40,16 +47,19 @@ const page = ({ params }: { params: { id: string } }) => {
                   {chat.message}
                 </div>
                 <div className="p-2 bg-transparent rounded-lg min-h-8 max-w-[80%] min-w-[30%] col-span-1 justify-self-start grid grid-cols-1 gap-4">
-                  {chat.response.length ? (
+                  {chat.response?.length ? (
                     chat.response.map((el, index) => {
                       return <Response el={el} index={index} />;
                     })
+                  ) : reqLoding && chat.response == null ? (
+                    <ChatSkeleton />
                   ) : (
                     <div className="col-span-2">
                       Sorry! No response genrated by server
                     </div>
                   )}
                 </div>
+                {index === chats.length - 1 && <div ref={lastMessageRef}></div>}
               </div>
             );
           })

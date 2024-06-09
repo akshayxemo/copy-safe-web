@@ -6,6 +6,7 @@ import { ImagePlus, LoaderCircle, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { Chat, ResponseFrame } from "@/types";
 
 const ChatBox = () => {
   const { data: Session } = useSession({
@@ -21,6 +22,8 @@ const ChatBox = () => {
     handleRefDivClick,
     reqLoding,
     setChats,
+    scrollToLastChat,
+    setReqLoading,
   } = useChatContext();
 
   useEffect(() => {
@@ -44,8 +47,17 @@ const ChatBox = () => {
     };
   }, [text]);
 
+  const addNewChat = (message: string) => {
+    const newChat: Chat = { message, response: null };
+    setChats((prevChats) => [...prevChats, newChat]);
+    setText("");
+    scrollToLastChat();
+  };
+
   const handleSubmit = async () => {
     try {
+      addNewChat(text);
+      setReqLoading(true);
       const { data: responseData } = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_BASE}/chat/send`,
         {
@@ -54,13 +66,15 @@ const ChatBox = () => {
           chatId: Session?.user?.chatId,
         }
       );
-      setText("");
       console.log(responseData);
       setChats(responseData.data.chats);
     } catch (error) {
       console.log(error);
+    } finally {
+      setReqLoading(false);
     }
   };
+
   return (
     <div className="flex w-full sticky bottom-0 left-0 justify-center py-5 px-5 bg-[#190d25]">
       <Input

@@ -26,8 +26,10 @@ interface ChatContextType {
   reqLoding: boolean;
   chats: Chat[];
   setChats: React.Dispatch<React.SetStateAction<Chat[]>>;
-  chatContainerRef: RefObject<HTMLDivElement>;
-  scrollToBottom: () => void;
+  chatContainerRef?: RefObject<HTMLDivElement>;
+  scrollToBottom?: () => void;
+  lastMessageRef: RefObject<HTMLDivElement>;
+  scrollToLastChat: () => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -49,12 +51,20 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
   const [chats, setChats] = useState<Chat[]>([]);
 
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  // const chatContainerRef = useRef<HTMLDivElement>(null);
+  const lastMessageRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+  // const scrollToBottom = () => {
+  //   if (chatContainerRef.current) {
+  //     chatContainerRef.current.scrollTop =
+  //       chatContainerRef.current.scrollHeight;
+
+  //     console.log(chatContainerRef.current.scrollHeight);
+  //   }
+  // };
+  const scrollToLastChat = () => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -104,8 +114,10 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
         reqLoding,
         chats,
         setChats,
-        chatContainerRef,
-        scrollToBottom,
+        lastMessageRef,
+        scrollToLastChat,
+        // chatContainerRef,
+        // scrollToBottom,
       }}
     >
       {children}

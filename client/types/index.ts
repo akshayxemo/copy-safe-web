@@ -13,7 +13,7 @@ export interface userRegisterCredential {
 
 export interface Chat {
   message: string;
-  response: [ResponseFrame];
+  response: ResponseFrame[] | null;
 }
 
 export interface ResponseFrame {
