@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useChatContext } from "./context/ChatProvider";
 import { CircleX, CloudUpload, X } from "lucide-react";
+import Link from "next/link";
 export const SideBar = () => {
   const {
     imageString,
@@ -13,7 +14,7 @@ export const SideBar = () => {
   return (
     <div className="h-screen p-6 max-w-80 bg-purple-500/10 backdrop-blur-xl flex-1 flex flex-col gap-8 items-start overflow-y-auto sticky top-0 left-0 z-[99999]">
       <div className="flex justify-between items-center w-full">
-        <div className="flex gap-2 items-center">
+        <Link href={"/chat"} className="flex gap-2 items-center">
           <Image
             src={"/icons/logoi-colored.png"}
             alt="logo-color"
@@ -21,7 +22,7 @@ export const SideBar = () => {
             height={30}
           />
           <h1 className="text-xl">CopySafe.</h1>
-        </div>
+        </Link>
       </div>
 
       {imageString ? (
