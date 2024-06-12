@@ -30,6 +30,9 @@ interface ChatContextType {
   scrollToBottom?: () => void;
   lastMessageRef: RefObject<HTMLDivElement>;
   scrollToLastChat: () => void;
+  handleImageClick: (
+    event: React.MouseEvent<HTMLImageElement, MouseEvent>
+  ) => Promise<void>;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -66,6 +69,25 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  // const handleImageClick = async (imageUrl: string) => {
+  //   setImageString(imageUrl);
+  //   setLoadingImage(true);
+  //   const extractedText: string = await recognizeText(imageUrl);
+  //   setText(extractedText);
+  //   setLoadingImage(false);
+  // };
+
+  const handleImageClick = async (
+    event: React.MouseEvent<HTMLImageElement, MouseEvent>
+  ) => {
+    const imageUrl = event.currentTarget.src;
+    setImageString(imageUrl);
+    setLoadingImage(true);
+    const extractedText: string = await recognizeText(imageUrl);
+    setText(extractedText);
+    setLoadingImage(false);
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,6 +138,7 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
         setChats,
         lastMessageRef,
         scrollToLastChat,
+        handleImageClick,
         // chatContainerRef,
         // scrollToBottom,
       }}

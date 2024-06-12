@@ -3,8 +3,13 @@ import Image from "next/image";
 import { useChatContext } from "./context/ChatProvider";
 import { CircleX, CloudUpload, X } from "lucide-react";
 export const SideBar = () => {
-  const { imageString, setImageString, setText, handleRefDivClick } =
-    useChatContext();
+  const {
+    imageString,
+    setImageString,
+    setText,
+    handleRefDivClick,
+    handleImageClick,
+  } = useChatContext();
   return (
     <div className="h-screen p-6 max-w-80 bg-purple-500/10 backdrop-blur-xl flex-1 flex flex-col gap-8 items-start overflow-y-auto sticky top-0 left-0 z-[99999]">
       <div className="flex justify-between items-center w-full">
@@ -50,6 +55,12 @@ export const SideBar = () => {
           <span>Click here to choose an image</span>
         </div>
       )}
+
+      {/* <img
+        src="https://akshayxemo-sde.s3.ap-south-1.amazonaws.com/profile/Screenshot+2024-06-06+221626.png"
+        className="cursor-pointer"
+        onClick={handleImageClick}
+      /> */}
       {/* <div className="w-full">
         <p className="mb-3 text-sm">yesterday</p>
         <ul className="grid grid-cols-1 gap-3">
