@@ -24,5 +24,5 @@ export interface ResponseFrame {
   citation?: string;
   year?: string;
   url?: string;
-  matchScore?: number;
+  matchScore: number;
 }

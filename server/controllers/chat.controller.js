@@ -7,9 +7,6 @@ module.exports = {
   createChat: async (req, res) => {
     try {
       const { abstract, userId, chatId } = req.body;
-      // if (mongoose.Types.ObjectId.isValid(userId)) {
-      //   return res.status(400).send({ error: true, message: "Invalid chatId" });
-      // }
       console.log(abstract, userId);
       const { data } = await axios.post(
         `${process.env.AI_SERVER}/api/standard`,

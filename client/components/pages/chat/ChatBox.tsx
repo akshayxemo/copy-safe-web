@@ -7,12 +7,25 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Chat, ResponseFrame } from "@/types";
+import Alert from "@/components/shared/Alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const ChatBox = () => {
   const { data: Session } = useSession({
     required: false,
   });
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const alertBtn = useRef<HTMLButtonElement | null>(null);
   const {
     handleImageUpload,
     loadingImage,
@@ -47,27 +60,47 @@ const ChatBox = () => {
     };
   }, [text]);
 
+  const validateAbstract = (abstract: string) => {
+    const words = abstract.trim().split(/\s+/);
+
+    // Check the word count
+    const wordCount = words.length;
+    return wordCount >= 90 && wordCount <= 150;
+    // return true;
+  };
+
   const addNewChat = (message: string) => {
-    const newChat: Chat = { message, response: null };
-    setChats((prevChats) => [...prevChats, newChat]);
-    setText("");
-    scrollToLastChat();
+    if (validateAbstract(message)) {
+      const newChat: Chat = { message, response: null };
+      setChats((prevChats) => [...prevChats, newChat]);
+      setText("");
+      scrollToLastChat();
+      return true;
+    }
+    return false;
   };
 
   const handleSubmit = async () => {
     try {
-      addNewChat(text);
-      setReqLoading(true);
-      const { data: responseData } = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE}/chat/send`,
-        {
-          abstract: text,
-          userId: Session?.user?.id,
-          chatId: Session?.user?.chatId,
+      const accept = addNewChat(text);
+      if (accept) {
+        setReqLoading(true);
+        const { data: responseData } = await axios.post(
+          `${process.env.NEXT_PUBLIC_SERVER_BASE}/chat/send`,
+          {
+            abstract: text,
+            userId: Session?.user?.id,
+            chatId: Session?.user?.chatId,
+          }
+        );
+        console.log(responseData);
+        setChats(responseData.data.chats);
+      } else {
+        // console.log("yueeee///////////s", alertBtn.current);
+        if (alertBtn.current) {
+          alertBtn.current.click();
         }
-      );
-      console.log(responseData);
-      setChats(responseData.data.chats);
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -113,6 +146,15 @@ const ChatBox = () => {
           <Send />
         </button>
       </div>
+      <Alert
+        OnClick={() => {
+          setText("");
+        }}
+        alertBtnRef={alertBtn}
+        alertMsg="Invalid Abstract Length"
+        alertDesc="Abstract must be greater than equal to 100 words and less than
+              equal to 150"
+      />
     </div>
   );
 };
